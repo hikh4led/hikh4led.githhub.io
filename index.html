@@ -1,42 +1,41 @@
-
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Avian Album</title>
+    <title>Aerial Avian Album</title>
     <meta name="description" content="A catalog of birds">
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header class="main-header">
-        <h1 class="title">Avian Album</h1>
+        <div class="title">Aerial Avian Album</div>
+        <div class="search">
+            <form onsubmit="renderBirds('', this.search.value); event.preventDefault();">
+                <input type="text" name="search" placeholder="Search for a bird">
+                <button type="submit">Search</button>
+            <select id="sort" onchange="renderBirds(this.value, '')">
+                <option value="none">None</option>
+                <option value="aToZ">A to Z</option>
+                <option value="zToA">Z to A</option>
+            </select>
+        </div>
     </header>
-    <div class="search">
-        <form onsubmit="renderBirds('', this.search.value); event.preventDefault();">
-            <input type="text" name="search" placeholder="Search for a bird">
-            <button type="submit">Search</button>
-    </div>
-    <div>
-        <select id="sort" onchange="renderBirds(this.value, '')">
-            <option value="none">None</option>
-            <option value="aToZ">A to Z</option>
-            <option value="zToA">Z to A</option>
-        </select>
-    </div>
     <div id="card-container">
         
     </div>
     <div class="card" style="display: none;">
-        <div class="card-content">
-            <h2>Bird Name</h2>
+        <div class="card-content" onclick="toggleCard(this)">
+            <div class="birdName">Bird Name</div>
             <img src="" alt="bird image">
-            <ul>
-                <!-- cards go here -->
+            <ul class="hidden">
             </ul>
         </div>
     </div>
 </body>
-
 </html>
