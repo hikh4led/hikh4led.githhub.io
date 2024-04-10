@@ -238,17 +238,24 @@ const birdData = [
         "nesting": "Ground nests in large colonies on sandy beaches or islands.",
         "behavior": "Dives for fish from the air; often seen in large flocks along the coast.",
         "conservation": "Least Concern, stable populations.",
-        "imageURL": "https://www.allaboutbirds.org/guide/assets/photo/308468891"
+        "imageURL": "https://www.allaboutbirds.org/guide/assets/photo/308468891-480px.jpg"
     }
 ];
 
 // This function adds cards the page to display the data in the array
-function showCards() {
+function showCards(sortType) {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
     
-    for (let i = 0; i < birdData.length; i++) {
+    let filteredData = [...birdData]; // Copy the birdData with spread operator
+    if (sortType == "aToZ") {
+        filteredData.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortType == "zToA") {
+        filteredData.sort((a, b) => b.name.localeCompare(a.name));
+    }
+    
+    for (let i = 0; i < filteredData.length; i++) {
         const {
             name,
             habitat,
@@ -257,7 +264,7 @@ function showCards() {
             behavior,
             conservation,
             imageURL
-        } = birdData[i];
+        } = filteredData[i];
 
         const nextCard = templateCard.cloneNode(true); // Copy the template card
         editCardContent(nextCard, name, imageURL, habitat, food, nesting, behavior, conservation); // Edit title and image
@@ -292,7 +299,10 @@ function editCardContent(card, birdName, newImageURL, newHabitat, newFood, newNe
 }
 
 // This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+document.addEventListener("DOMContentLoaded", () => {
+    showCards("");
+});
+
 
 function quoteAlert() {
     console.log("Button Clicked!")
