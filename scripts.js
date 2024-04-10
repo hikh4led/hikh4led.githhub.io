@@ -266,7 +266,15 @@ function renderBirds(sortType, searchBy) {
     }
     
     if (SEARCH_BY != "") {
-        filteredData = filteredData.filter(bird => bird.name.toLowerCase().startsWith(SEARCH_BY));
+        filteredData = filteredData.filter(bird => {
+            let words = bird.name.toLowerCase().split(" ");
+            for (let i = 0; i < words.length; i++) {
+                if (words[i].startsWith(SEARCH_BY)) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
     
     for (let i = 0; i < filteredData.length; i++) {
