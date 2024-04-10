@@ -13,9 +13,14 @@
     <header class="main-header">
         <h1 class="title">Avian Album</h1>
     </header>
+    <div class="search">
+        <form onsubmit="renderBirds('', this.search.value); event.preventDefault();">
+            <input type="text" name="search" placeholder="Search for a bird">
+            <button type="submit">Search</button>
+    </div>
     <div>
-        <select id="sort" onchange="showCards(this.value)">
-            <option value="">None</option>
+        <select id="sort" onchange="renderBirds(this.value, '')">
+            <option value="none">None</option>
             <option value="aToZ">A to Z</option>
             <option value="zToA">Z to A</option>
         </select>

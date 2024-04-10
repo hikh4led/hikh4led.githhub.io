@@ -242,17 +242,31 @@ const birdData = [
     }
 ];
 
+// global variables to persist the filter options
+let SORT_TYPE = "";
+let SEARCH_BY = "";
+
 // This function adds cards the page to display the data in the array
-function showCards(sortType) {
+function renderBirds(sortType, searchBy) {
+    if (sortType != "") {
+        SORT_TYPE = sortType;
+    } else {
+        SEARCH_BY = searchBy.toLowerCase();
+    }
+
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
     
     let filteredData = [...birdData]; // Copy the birdData with spread operator
-    if (sortType == "aToZ") {
+    if (SORT_TYPE == "aToZ") {
         filteredData.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortType == "zToA") {
+    } else if (SORT_TYPE  == "zToA") {
         filteredData.sort((a, b) => b.name.localeCompare(a.name));
+    }
+    
+    if (SEARCH_BY != "") {
+        filteredData = filteredData.filter(bird => bird.name.toLowerCase().startsWith(SEARCH_BY));
     }
     
     for (let i = 0; i < filteredData.length; i++) {
@@ -300,16 +314,5 @@ function editCardContent(card, birdName, newImageURL, newHabitat, newFood, newNe
 
 // This calls the addCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", () => {
-    showCards("");
+    renderBirds("", "");
 });
-
-
-function quoteAlert() {
-    console.log("Button Clicked!")
-    alert("I guess I can kiss heaven goodbye, because it got to be a sin to look this good!");
-}
-
-function removeLastCard() {
-    titles.pop(); // Remove last item in titles array
-    showCards(); // Call showCards again to refresh
-}
