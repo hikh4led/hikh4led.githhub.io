@@ -23,7 +23,7 @@
  * 
  */
 
-let birdData = [
+const birdData = [
     {
         "name": "House Wren",
         "habitat": "Open, shrubby, or grassy areas, including gardens and parks in urban and suburban settings.",
@@ -242,48 +242,53 @@ let birdData = [
     }
 ];
 
-
-
 // This function adds cards the page to display the data in the array
 function showCards() {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
     
-    for (let i = 0; i < titles.length; i++) {
-        let title = titles[i];
-
-        // This part of the code doesn't scale very well! After you add your
-        // own data, you'll need to do something totally different here.
-        let imageURL = "";
-        if (i == 0) {
-            imageURL = FRESH_PRINCE_URL;
-        } else if (i == 1) {
-            imageURL = CURB_POSTER_URL;
-        } else if (i == 2) {
-            imageURL = EAST_LOS_HIGH_POSTER_URL;
-        }
+    for (let i = 0; i < birdData.length; i++) {
+        const {
+            name,
+            habitat,
+            food,
+            nesting,
+            behavior,
+            conservation,
+            imageURL
+        } = birdData[i];
 
         const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, title, imageURL); // Edit title and image
+        editCardContent(nextCard, name, imageURL, habitat, food, nesting, behavior, conservation); // Edit title and image
         cardContainer.appendChild(nextCard); // Add new card to the container
     }
 }
 
-function editCardContent(card, newTitle, newImageURL) {
+function addBullet(list, label, text) {
+    const bullet = document.createElement("li");
+    bullet.innerHTML = "<strong>" + label + ":</strong> " + text;
+    list.appendChild(bullet);
+}
+
+function editCardContent(card, birdName, newImageURL, newHabitat, newFood, newNesting, newBehavior, newConservation) {
     card.style.display = "block";
 
     const cardHeader = card.querySelector("h2");
-    cardHeader.textContent = newTitle;
+    cardHeader.textContent = birdName;
 
     const cardImage = card.querySelector("img");
     cardImage.src = newImageURL;
-    cardImage.alt = newTitle + " Poster";
+    cardImage.alt = birdName;
+    
+    const list = card.querySelector("ul");
+    addBullet(list, "Habitat", newHabitat);
+    addBullet(list, "Food", newFood);
+    addBullet(list, "Nesting", newNesting);
+    addBullet(list, "Behavior", newBehavior);
+    addBullet(list, "Conservation", newConservation);
 
-    // You can use console.log to help you debug!
-    // View the output by right clicking on your website,
-    // select "Inspect", then click on the "Console" tab
-    console.log("new card:", newTitle, "- html: ", card);
+    console.log("added new bird card:", birdName, "- html: ", card);
 }
 
 // This calls the addCards() function when the page is first loaded
